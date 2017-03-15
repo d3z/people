@@ -1,5 +1,6 @@
 package com.joocy.people.service
 
+import com.joocy.people.model.NewPerson
 import com.joocy.people.model.Person
 import com.joocy.people.store.PersonStore
 import com.joocy.people.store.SortedBy
@@ -36,6 +37,15 @@ class PersonServiceTest {
         verify(mockPersonStore).getAllPeopleByEmail()
     }
 
+    @Test
+    fun shouldReturnPersonWithIdWhenCreatingNew() {
+        val id = UUID.randomUUID()
+        val newPerson = buildNewPerson()
+        `when`(mockPersonStore.add(newPerson)).thenReturn(buildPersonWithId(id))
+        val person = target.createNewPerson(newPerson)
+        assertThat(person.id).isEqualTo(id)
+    }
+
 
     private fun buildPersonList(): Pair<Int, List<Person>> {
         var people = mutableListOf<Person>()
@@ -44,6 +54,14 @@ class PersonServiceTest {
             people.add(Person())
         }
         return Pair(numPeople, people)
+    }
+
+    private fun buildPersonWithId(id: UUID): Person {
+        return Person(id=id)
+    }
+
+    private fun buildNewPerson(): NewPerson {
+        return NewPerson()
     }
 
 }
