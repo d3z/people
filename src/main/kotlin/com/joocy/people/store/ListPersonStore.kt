@@ -10,15 +10,16 @@ import com.joocy.people.model.Person
 class ListPersonStore(var people: List<Person> = mutableListOf()) : PersonStore {
 
     override fun getAllPeople(): List<Person> {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        // send copy of list
+        return people.subList(0, people.count())
     }
 
     override fun getAllPeopleByName(): List<Person> {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        return people.sortedBy { person -> person.name }
     }
 
     override fun getAllPeopleByEmail(): List<Person> {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        return people.sortedBy { person -> person.email }
     }
 
     override fun add(newPerson: NewPerson): Person {
